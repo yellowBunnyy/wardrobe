@@ -1,5 +1,5 @@
-from .wardrobe_params import WardrobeAgreagator, WardrobeParams
-from .wall import WallParams
+from src.wardrobe_params import WardrobeAgreagator, WardrobeParams
+from src.wall import WallParams
 
 
 class AppLogic:
@@ -33,3 +33,5 @@ expected = 250
 
 inst = AppLogic()
 inst.wardrobe_widths = [50, 75, 100, 120]
+print(inst.find_possibilities())
+
