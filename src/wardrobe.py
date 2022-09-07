@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Dict
 
+
 @dataclass
 class WardrobeParams:
     # params in cm unit.
@@ -17,6 +18,5 @@ class WardrobeAgreagator:
         return [wardrobe.width for wardrobe in self.wardrobe_contrainer]
 
     @property
-    def maped_wardrobe_width_to_price(self)-> Dict:
+    def maped_wardrobe_width_to_price(self) -> Dict:
         return {wardrobe.width: wardrobe.price for wardrobe in self.wardrobe_contrainer}
-

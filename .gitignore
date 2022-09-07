@@ -1,6 +1,8 @@
 /Pipfile
-/tests/.pytest_cache
-/tests/__pycache__
 /__pycache__
 /Pipfile.lock
 /src/__pycache__
+/src/.pytest_cache
+/.pytest_cache
+/src/tests/__pycache__
+/src/tests/.pytest_cache

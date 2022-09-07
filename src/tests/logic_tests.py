@@ -1,7 +1,9 @@
 import pytest
-from src.logic import CombinationsPossibilitiesLogic
+from src.combinations_logic import CombinationsLogic
+from src.calc_score_logic import CalculationLogic
 from src.wall import WallParams
-from src.wardrobe_params import WardrobeParams, WardrobeAgreagator
+from src.wardrobe import WardrobeParams, WardrobeAgreagator
+from src.app_main import App
 import pdb
 
 
@@ -26,13 +28,21 @@ def aggregator_obj():
 
 @pytest.fixture(scope="class")
 def app_logic_object(wall_object, aggregator_obj):
-    logic = CombinationsPossibilitiesLogic(wardrobes=aggregator_obj, wall=wall_object)
+    logic = CombinationsLogic(wardrobes=aggregator_obj, wall=wall_object)
     return logic
 
 
-def test_wardrobeAggregator_create_should_create_wardrobes_aggregator(aggregator_obj):
+@pytest.fixture(scope="class")
+def calc_score_obj(aggregator_obj):
+    calculations = CalculationLogic(wardrobes=aggregator_obj)
+    return calculations
+
+
+def test_wardrobeAggregator_was_crated_should_return_wardrobes_aggregator(
+    aggregator_obj,
+):
     assert aggregator_obj.wardrobe_contrainer[0].width == 100
-    assert aggregator_obj.wardrobe_contrainer[0].price == 20
+    assert aggregator_obj.wardrobe_contrainer[0].price == 90
     assert aggregator_obj.wardrobe_contrainer[1].width == 50
     assert aggregator_obj.wardrobe_contrainer[2].width == 75
 
@@ -105,10 +115,39 @@ def test_remove_duplications_from_container_with_solutions(app_logic_object):
     assert app_logic_object.remove_duplications(solutions) == expected
 
 
-def test_cheepest_combination_should_return_cheepest_solution(app_logic_object):
-    app_logic_object.solutions = [
+def test_calculate_summary_price_from_solution_should_return_summary_price(
+    calc_score_obj,
+):
+    solution = (50, 50, 75)
+    assert calc_score_obj.get_summary_price_from_solution(solution=solution) == 180
+
+
+def test_cheepest_combination_should_return_cheepest_solution(calc_score_obj):
+    calc_score_obj.solutions = [
         (50, 50, 50, 50, 50),
         (50, 50, 75, 75),
         (50, 50, 50, 100),
     ]
-    assert app_logic_object.find_cheepest_combination == (50, 50, 75, 75)
+    assert calc_score_obj.find_cheepest_combination == (50, 50, 75, 75)
+
+
+def test_generate_solutions(app_logic_object):
+    expected = [
+        (50, 50, 75, 75),
+        (50, 50, 50, 100),
+        (50, 50, 50, 50, 50),
+        (75, 75, 100),
+        (50, 100, 100),
+    ]
+    app_logic_object.generate_solutions()
+    for sol in app_logic_object.solutions:
+        assert sol in expected
+
+
+
+def test_get_best_solution_for_solve_task(app_logic_object, calc_score_obj):
+    app_logic_object.generate_solutions()
+    solutions = app_logic_object.solutions
+    calc_score_obj.add_solutions(solutions=solutions)
+    app = App(calculations=calc_score_obj, wardrobe_combinations=app_logic_object)
+    assert app.get_result() == (75, 75, 100)
