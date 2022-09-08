@@ -2,7 +2,7 @@
 This smal project try to solve problem discribed in the following link https://kata-log.rocks/configure-wardrobe-kata. Chosen solution seeks to apply layer architecture.
 
 ### Tree
-
+```
 .
 ├── Pipfile
 ├── Pipfile.lock
@@ -20,7 +20,7 @@ This smal project try to solve problem discribed in the following link https://k
     │   └── logic_tests.py
     ├── wall.py
     └── wardrobe.py
-
+```
 ### Questions
 - we need to reorganize folders e.g:
     create folder domain and put application logic to this folder? 
