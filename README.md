@@ -23,7 +23,7 @@ This smal project try to solve problem discribed in the following link https://k
 ```
 ### Questions
 - we need to reorganize folders e.g:
-    create folder domain and put application logic to this folder? 
-- app_maim.py is a service layer? I thing is desired.
+    create folder domain and put application logic to this folder? I thing is desired.
+- app_maim.py is a service layer? 
 - data_from_user.py can be a contoller in the sens of "clean architecture"?
 - is necesary to split tests for separate files? I thing is desired.
