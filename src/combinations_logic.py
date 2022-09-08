@@ -9,16 +9,16 @@ class CombinationsLogicInterface(ABC):
     @abstractclassmethod
     def find_possibilities(self):
         pass
-
+    @abstractclassmethod
     def can_put_wardrobe_to_container(self, wardrobe_width: int):
         pass
-
+    @abstractclassmethod
     def remove_duplications(self, wardrobe_solutions: List[Tuple]):
         pass
-
+    @abstractclassmethod
     def sort_wardrobe_solutions(self, wardrobe_solutions: List[List]):
         pass
-
+    @abstractclassmethod
     def generate_solutions(self):
         pass
 
